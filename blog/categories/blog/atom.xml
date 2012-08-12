@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Problem, Solution, and Failure]]></title>
-  <link href="http://insikk.github.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: blog | Problem, Solution, and Failure]]></title>
+  <link href="http://insikk.github.com/blog/categories/blog/atom.xml" rel="self"/>
   <link href="http://insikk.github.com/"/>
   <updated>2012-08-13T02:32:30+09:00</updated>
   <id>http://insikk.github.com/</id>
