@@ -4,7 +4,7 @@
   <title><![CDATA[Problem, Solution, and Failure]]></title>
   <link href="http://insikk.github.com/atom.xml" rel="self"/>
   <link href="http://insikk.github.com/"/>
-  <updated>2012-08-14T00:05:43+09:00</updated>
+  <updated>2012-08-15T00:58:01+09:00</updated>
   <id>http://insikk.github.com/</id>
   <author>
     <name><![CDATA[Insik Kim]]></name>
@@ -14,17 +14,209 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Setting Up octopress-tagcloud Plug-in]]></title>
+    <link href="http://insikk.github.com/blog/2012/08/14/setting-up-octopress-tagcloud-plug-in/"/>
+    <updated>2012-08-14T23:54:00+09:00</updated>
+    <id>http://insikk.github.com/blog/2012/08/14/setting-up-octopress-tagcloud-plug-in</id>
+    <content type="html"><![CDATA[<p><code>Problem: Setting Up octopress-tagcloloud Plug-in</code></p>
+
+<p><code>Status: Solved</code></p>
+
+<p><code>Comment: Clever Solution</code></p>
+
+<p>Details:</p>
+
+<p><a href="https://github.com/tokkonopapa/octopress-tagcloud">octopress-tagcloud</a> is 3rd party plug-in which list in <a href="https://github.com/imathis/octopress/wiki/3rd-party-plugins">octopress github wiki</a>. I needed kinds of plug-in to provide quick tag access point for my readers. So I started setting up.</p>
+
+<p>I was able to get all required files in <a href="https://github.com/tokkonopapa/octopress-tagcloud">https://github.com/tokkonopapa/octopress-tagcloud</a>.</p>
+
+<p>But ReadMe file in this repository was not kind. This files has below instructions.</p>
+
+<ol>
+<li><p>Place below files in your octopress folder from tagcloud git repository.</p>
+
+<ul>
+<li>plugins/tag_cloud.rb</li>
+<li>source/_includes/custom/asides/tag_cloud.html</li>
+<li>source/_includes/custom/asides/category_list.html</li>
+</ul>
+</li>
+<li><p>Change <code>default_asides</code> array in <code>_config.yml</code>.</p></li>
+</ol>
+
+
+<p>In your octopress folder, you can find <code>_config.yml</code>. It contains below line in middle of something.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="c1"># list each of the sidebar modules you want to include, in the order you want them to appear.</span>
+</span><span class='line'><span class="c1"># To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like &#39;custom/asides/custom_aside_name.html&#39;</span>
+</span><span class='line'><span class="l-Scalar-Plain">default_asides</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">asides/recent_posts.html</span><span class="p-Indicator">,</span> <span class="nv">asides/github.html</span><span class="p-Indicator">,</span> <span class="nv">asides/twitter.html</span><span class="p-Indicator">,</span> <span class="nv">asides/delicious.html</span><span class="p-Indicator">,</span> <span class="nv">asides/pinboard.html</span><span class="p-Indicator">,</span> <span class="nv">asides/googleplus.html</span><span class="p-Indicator">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add <code>custom/asides/category_list.html</code> and <code>custom/asides/tag_cloud.html</code> inside [blah, blah]. It is list. So result was look like below:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">default_asides</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">asides/recent_posts.html</span><span class="p-Indicator">,</span> <span class="nv">asides/github.html</span><span class="p-Indicator">,</span> <span class="nv">asides/twitter.html</span><span class="p-Indicator">,</span> <span class="nv">asides/delicious.html</span><span class="p-Indicator">,</span> <span class="nv">asides/pinboard.html</span><span class="p-Indicator">,</span> <span class="nv">asides/googleplus.html</span><span class="p-Indicator">,</span> <span class="nv">custom/asides/category_list.html</span><span class="p-Indicator">,</span> <span class="nv">custom/asides/tag_cloud.html</span><span class="p-Indicator">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p>YAP!! I followed all instructions in ReadMe file. So I checked my updated blog. But there was problem. Why Category list has exactly same as Tags list?</p>
+
+<p>I figured out that I didn&#8217;t add any tags from posts. So I was about to add tags, but HOW?
+I thought something is wrong with code. I needed to fix it from code level. Though I am pythonian, I have to delve into ruby code, <code>tag_cloud.rb</code>.</p>
+
+<p>This is what I changed. I simply replaced <code>categories</code> to <code>tags</code>, and <code>category</code> to <code>tag</code>. Here is code.</p>
+
+<figure class='code'><figcaption><span>TagCloud Class Which I edited </span><a href='https://github.com/tokkonopapa/octopress-tagcloud/blob/master/plugins/tag_cloud.rb'>See Original</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">class</span> <span class="nc">TagCloud</span> <span class="o">&lt;</span> <span class="no">Liquid</span><span class="o">::</span><span class="no">Tag</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span> <span class="n">markup</span><span class="p">,</span> <span class="n">tokens</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@opts</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">markup</span><span class="o">.</span><span class="n">strip</span> <span class="o">=~</span> <span class="sr">/\s*counter:(\w+)/i</span>
+</span><span class='line'>        <span class="vi">@opts</span><span class="o">[</span><span class="s1">&#39;counter&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="p">(</span><span class="vg">$1</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">markup</span> <span class="o">=</span> <span class="n">markup</span><span class="o">.</span><span class="n">strip</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sr">/counter:\w+/i</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="k">super</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">lists</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>      <span class="n">max</span><span class="p">,</span> <span class="n">min</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="n">config</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">registers</span><span class="o">[</span><span class="ss">:site</span><span class="o">].</span><span class="n">config</span>
+</span><span class='line'>      <span class="n">tag_dir</span> <span class="o">=</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;root&#39;</span><span class="o">]</span> <span class="o">+</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;tag_dir&#39;</span><span class="o">]</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+</span><span class='line'>      <span class="n">tags</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">registers</span><span class="o">[</span><span class="ss">:site</span><span class="o">].</span><span class="n">tags</span>
+</span><span class='line'>      <span class="n">tags</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">sort_by</span><span class="p">{</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span> <span class="n">str</span><span class="o">.</span><span class="n">downcase</span> <span class="p">}</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">tag</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">=</span> <span class="n">tags</span><span class="o">[</span><span class="n">tag</span><span class="o">].</span><span class="n">count</span>
+</span><span class='line'>        <span class="n">lists</span><span class="o">[</span><span class="n">tag</span><span class="o">]</span> <span class="o">=</span> <span class="n">count</span>
+</span><span class='line'>        <span class="n">max</span> <span class="o">=</span> <span class="n">count</span> <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="n">max</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">html</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>      <span class="n">lists</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span> <span class="n">tag</span><span class="p">,</span> <span class="n">counter</span> <span class="o">|</span>
+</span><span class='line'>        <span class="n">url</span> <span class="o">=</span> <span class="n">tag_dir</span> <span class="o">+</span> <span class="n">tag</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/_|\P{Word}/</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/-{2,}/</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">downcase</span>
+</span><span class='line'>        <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;font-size: </span><span class="si">#{</span><span class="mi">100</span> <span class="o">+</span> <span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="nb">Float</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span><span class="o">/</span><span class="n">max</span><span class="p">)</span><span class="si">}</span><span class="s2">%&quot;</span>
+</span><span class='line'>        <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;a href=&#39;</span><span class="si">#{</span><span class="n">url</span><span class="si">}</span><span class="s2">&#39; style=&#39;</span><span class="si">#{</span><span class="n">style</span><span class="si">}</span><span class="s2">&#39;&gt;</span><span class="si">#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="vi">@opts</span><span class="o">[</span><span class="s1">&#39;counter&#39;</span><span class="o">]</span>
+</span><span class='line'>          <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;(</span><span class="si">#{</span><span class="n">tags</span><span class="o">[</span><span class="n">tag</span><span class="o">].</span><span class="n">count</span><span class="si">}</span><span class="s2">)&quot;</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>        <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;/a&gt; &quot;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="n">html</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One more thing. You should add below line into <code>_config.yml</code>.</p>
+
+<pre><code>tag_dir: blog/tags
+</code></pre>
+
+<p>So <code>_config.yml</code> contains portions that looks like this</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="c1"># If publishing to a subdirectory as in http://site.com/project set &#39;root: /project&#39;</span>
+</span><span class='line'><span class="l-Scalar-Plain">root</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/</span>
+</span><span class='line'><span class="l-Scalar-Plain">permalink</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/blog/:year/:month/:day/:title/</span>
+</span><span class='line'><span class="l-Scalar-Plain">source</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">source</span>
+</span><span class='line'><span class="l-Scalar-Plain">destination</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">public</span>
+</span><span class='line'><span class="l-Scalar-Plain">plugins</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">plugins</span>
+</span><span class='line'><span class="l-Scalar-Plain">code_dir</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">downloads/code</span>
+</span><span class='line'><span class="l-Scalar-Plain">category_dir</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">blog/categories</span>
+</span><span class='line'><span class="l-Scalar-Plain">tag_dir</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">blog/tags</span>
+</span><span class='line'><span class="l-Scalar-Plain">markdown</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">rdiscount</span>
+</span><span class='line'><span class="l-Scalar-Plain">pygments</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span> <span class="c1"># default python pygments have been replaced by pygments.rb</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally tag list works well.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Archiving with utf8 filename on Mac]]></title>
+    <link href="http://insikk.github.com/blog/2012/08/14/archiving-with-utf8-filename-on-mac/"/>
+    <updated>2012-08-14T22:54:00+09:00</updated>
+    <id>http://insikk.github.com/blog/2012/08/14/archiving-with-utf8-filename-on-mac</id>
+    <content type="html"><![CDATA[<p><code>Problem: Archiving with utf8 filename on Mac</code></p>
+
+<p><code>Status: Solved</code></p>
+
+<p><code>Comment: Not Cute Solution</code></p>
+
+<p>Details:</p>
+
+<p>When you compress some files in Windows 7, and unarchive in Mac, you will see broken character. English is fine, reader for this post probably use other language.</p>
+
+<p>Because default compression in Windows operating system doesn&#8217;t support maintaining file names in utf8, you need to use other archive program which support utf8.</p>
+
+<p>I recommend <a href="http://www.bandicam.com/bandizip">Bandizip</a>. There are two version, Mac version and Windows version. Because of software cost, I choose Windows version. It is <strong>free</strong>. I run it  on Mac with <a href="http://www.parallels.com/products/desktop/">Parallels Desktop 7</a> coherence mode. This is Windows 7 virtualisation solution for Mac.
+You can find how to set up Bandizip utf-8 aware archiving in <a href="http://www.bandicam.com/bandizip/help/utf8/">http://www.bandicam.com/bandizip/help/utf8/</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Blog Start!!!]]></title>
     <link href="http://insikk.github.com/blog/2012/08/13/blog-start/"/>
     <updated>2012-08-13T01:57:00+09:00</updated>
     <id>http://insikk.github.com/blog/2012/08/13/blog-start</id>
     <content type="html"><![CDATA[<p>I tried to open my blog for 3 years. To follow <a href="http://www.catb.org/esr/faqs/hacker-howto.html#attitude">hacker sprit</a>, I was finding place to share information about problem solving. Problem solving includes resolving problems which I encounter sometimes.</p>
 
-<p>However I did not want to open my blog with blog providing services (eg. wordpress, blogger). Becuase I am computer scientist, programmer and artist, I need to understand all procedure that involved in my blog, I need to take control all over my blog and I need to change my blog whatever I want.</p>
+<p>However I did not want to open my blog with blog providing services (e.g. wordpress, blogger). Because I am computer scientist, programmer and artist, I need to understand all procedure that involved in my blog, I need to take control all over my blog and I need to change my blog whatever I want.</p>
 
-<p>While those thought about blog were in my head, I found <a href="https://github.com">GitHub</a> and <a href="octopress.org">Octopress</a>. And today, it is Sunday, wihch means I can spend my time for hobby. <em>Yes, it is Monday. I am being all-nighter today. Haha</em> All resources are ready, and BOOM!!. I CREATED MY BLOG.</p>
+<p>While those thought about blog were in my head, I found <a href="https://github.com">GitHub</a> and <a href="octopress.org">Octopress</a>. And today, it is Sunday, which means I can spend my time for hobby. <em>Yes, it is Monday. I am being all-nighter today. Haha</em> All resources are ready, and BOOM!!. I CREATED MY BLOG.</p>
 
-<p>I hope my future postings provide useful information. So my reader can save theire valuable time.</p>
+<p>I hope my future postings provide useful information. So my readers can save their valuable time.</p>
 ]]></content>
   </entry>
   

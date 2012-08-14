@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Mac | Problem, Solution, and Failure]]></title>
+  <link href="http://insikk.github.com/blog/categories/mac/atom.xml" rel="self"/>
+  <link href="http://insikk.github.com/"/>
+  <updated>2012-08-15T00:58:01+09:00</updated>
+  <id>http://insikk.github.com/</id>
+  <author>
+    <name><![CDATA[Insik Kim]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Archiving with utf8 filename on Mac]]></title>
+    <link href="http://insikk.github.com/blog/2012/08/14/archiving-with-utf8-filename-on-mac/"/>
+    <updated>2012-08-14T22:54:00+09:00</updated>
+    <id>http://insikk.github.com/blog/2012/08/14/archiving-with-utf8-filename-on-mac</id>
+    <content type="html"><![CDATA[<p><code>Problem: Archiving with utf8 filename on Mac</code></p>
+
+<p><code>Status: Solved</code></p>
+
+<p><code>Comment: Not Cute Solution</code></p>
+
+<p>Details:</p>
+
+<p>When you compress some files in Windows 7, and unarchive in Mac, you will see broken character. English is fine, reader for this post probably use other language.</p>
+
+<p>Because default compression in Windows operating system doesn't support maintaining file names in utf8, you need to use other archive program which support utf8.</p>
+
+<p>I recommend <a href="http://www.bandicam.com/bandizip">Bandizip</a>. There are two version, Mac version and Windows version. Because of software cost, I choose Windows version. It is <strong>free</strong>. I run it  on Mac with <a href="http://www.parallels.com/products/desktop/">Parallels Desktop 7</a> coherence mode. This is Windows 7 virtualisation solution for Mac.
+You can find how to set up Bandizip utf-8 aware archiving in <a href="http://www.bandicam.com/bandizip/help/utf8/">http://www.bandicam.com/bandizip/help/utf8/</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>
